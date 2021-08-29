@@ -4,7 +4,7 @@ const songs = [
     title: "Baghalam kon",
     singer: "Amin Habibi",
     src: "https://dl.naslemusic.com/music/1395/03/Amin%20Habibi%20-%20Baghalam%20Kon.mp3",
-    img: "https://www.navahang.com/images/2017/02/470x470/Amin-Habibi.jpg",
+    img: "https://ahaang.com/wp-content/uploads/2015/12/amin-habibi.jpg",
   },
   {
     id: 2,

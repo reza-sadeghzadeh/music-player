@@ -1,15 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import styled from "styled-components";
 import { motion } from "framer-motion";
-import { getAllSongs } from "../musics";
 
-function Library({ libOpen }) {
-  const [musics, setMusics] = useState([]);
-
-  useEffect(() => {
-    setMusics(getAllSongs());
-  }, []);
-
+function Library({ libOpen, musics }) {
   const animationProps = {
     initial: {
       left: -500,
