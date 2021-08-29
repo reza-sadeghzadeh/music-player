@@ -37,7 +37,7 @@ function Main() {
         </div>
       </div>
       <audio
-        src="https://dl.naslemusic.com/music/1395/03/Amin%20Habibi%20-%20Baghalam%20Kon.mp3"
+        src="https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.irantunez.com%2Fmusic%2Famin-habibi-bi-gharar-new-version&psig=AOvVaw24F63zKYV91YtQwOs0h9o0&ust=1630337397614000&source=images&cd=vfe&ved=0CAgQjRxqFwoTCJCl1Z7G1vICFQAAAAAdAAAAABAN"
         autoPlay
       ></audio>
     </Div>

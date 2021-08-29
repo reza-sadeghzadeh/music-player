@@ -1,19 +1,42 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
+import { motion } from "framer-motion";
 import { getAllSongs } from "../musics";
 
-function Library() {
+function Library({ libOpen }) {
   const [musics, setMusics] = useState([]);
 
   useEffect(() => {
     setMusics(getAllSongs());
   }, []);
 
+  const animationProps = {
+    initial: {
+      left: -500,
+    },
+    then: {
+      left: libOpen ? 0 : -400,
+      transition: {
+        duration: 0.5,
+      },
+    },
+  };
+
   return (
-    <Div>
+    <Div variants={animationProps} animate="then" initial="initial">
       <ul>
         {musics.map((m) => (
-          <li key={m.id}>
+          <motion.li
+            animate={{
+              translateX: libOpen ? 0 : -100,
+              opacity: libOpen ? 1 : 0,
+              transition: {
+                duration: libOpen ? 0.2 : 0.5,
+                delay: libOpen ? m.id * 0.1 : 0,
+              },
+            }}
+            key={m.id}
+          >
             <div className="flex-center">
               <img src={m.img} alt={`${m.singer}'s photo`} />
               <div className="content flex-center">
@@ -21,7 +44,7 @@ function Library() {
                 <h4>{m.singer}</h4>
               </div>
             </div>
-          </li>
+          </motion.li>
         ))}
       </ul>
     </Div>
@@ -30,12 +53,13 @@ function Library() {
 
 export default Library;
 
-const Div = styled.aside`
+const Div = styled(motion.aside)`
+  z-index: 3;
   position: fixed;
   left: 0;
   top: 0;
   height: 100vh;
-  width: clamp(300px, 20%, 350px);
+  width: clamp(350px, 25%, 400px);
   overflow-y: scroll;
   background-color: white;
   scrollbar-width: thin;
@@ -55,8 +79,8 @@ const Div = styled.aside`
   }
 
   li {
-    border-top: 1px solid #ffffff;
-    border-bottom: 1px solid #ffffff;
+    border-top: 1px solid #f5f5f5;
+    border-bottom: 1px solid #f5f5f5;
 
     :hover {
       border-bottom: 1px solid #f07cff;
@@ -77,7 +101,7 @@ const Div = styled.aside`
     }
 
     img {
-      width: 30%;
+      width: 90px;
       object-fit: cover;
       aspect-ratio: 1/1;
       border-radius: 50%;
@@ -88,7 +112,13 @@ const Div = styled.aside`
       justify-content: center;
       align-items: flex-start;
 
-      h2 {
+      h3 {
+        margin-bottom: 0.4rem;
+        font-weight: 500;
+      }
+      h4 {
+        opacity: 0.8;
+        font-weight: 300;
       }
     }
   }

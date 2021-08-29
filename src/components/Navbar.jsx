@@ -1,14 +1,20 @@
 import React from "react";
 import styled from "styled-components";
 
-function Navbar() {
+function Navbar({ setLibOpen, libOpen }) {
+  const handleLibOpen = () => {
+    setLibOpen(!libOpen);
+  };
+
   return (
     <Nav className="flex-center">
       <div className="content flex-center">
         <h1>
           Music <span>P</span>layer
         </h1>
-        <button className="btn">Library</button>
+        <button onClick={handleLibOpen} className="btn">
+          Library
+        </button>
       </div>
     </Nav>
   );
