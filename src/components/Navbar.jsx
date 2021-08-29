@@ -3,8 +3,8 @@ import styled from "styled-components";
 
 function Navbar() {
   return (
-    <Nav>
-      <div className="content">
+    <Nav className="flex-center">
+      <div className="content flex-center">
         <h1>
           Music <span>P</span>layer
         </h1>
@@ -16,18 +16,13 @@ function Navbar() {
 
 export default Navbar;
 
-const Nav = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
+const Nav = styled.nav`
   height: 80px;
   border-bottom: 1px solid #d2d2d2;
 
   .content {
-    display: flex;
     justify-content: space-around;
     width: 100%;
-    align-items: center;
 
     h1 {
       font-size: 2rem;

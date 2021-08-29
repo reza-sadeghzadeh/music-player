@@ -22,7 +22,17 @@ body {
   cursor: pointer;
   font-size: 1.5rem;
 }
+
 h1 {
   font-size: 2.5rem;
   font-weight: 500;
+}
+h2 {
+  font-size: 1.7rem;
+}
+
+.flex-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
