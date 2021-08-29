@@ -11,7 +11,7 @@ const songs = [
     title: "Khoshbakhtit arezome",
     singer: "Siamak abbasi",
     img: "https://upmusics.com/wp-content/uploads/2017/10/1-1.jpg",
-    src: "https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.irantunez.com%2Fmusic%2Famin-habibi-bi-gharar-new-version&psig=AOvVaw24F63zKYV91YtQwOs0h9o0&ust=1630337397614000&source=images&cd=vfe&ved=0CAgQjRxqFwoTCJCl1Z7G1vICFQAAAAAdAAAAABAN",
+    src: "https://irsv.upmusics.com/Downloads/Musics/Siamak%20Abbasi%20-%20Khoshbakhtit%20Arezoome%20(320).mp3?_ga=2.230491164.1808244596.1630225203-536456928.1629913724",
   },
   {
     id: 3,
@@ -59,6 +59,9 @@ const songs = [
 
 export const getAllSongs = () => {
   return songs;
+};
+export const findOneByTitle = (a) => {
+  return songs.find((e) => e.title === a);
 };
 
 export const getOneRandomSong = () => {

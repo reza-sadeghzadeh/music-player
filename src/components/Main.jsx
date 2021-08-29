@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef } from "react";
 import Player from "./Player";
 
 function Main({ setLibOpen, currentSong, setCurrentSong, musics }) {
@@ -11,12 +11,13 @@ function Main({ setLibOpen, currentSong, setCurrentSong, musics }) {
     let { current: AudioRef } = audioRef;
 
     if (!currentSong.time) {
-      AudioRef.src = musics[currentSong.index].src;
+      AudioRef.src = currentSong.self.src;
       AudioRef.play();
       AudioRef.addEventListener("timeupdate", (e) => {
         setCurrentSong({
           time: e.target.currentTime,
           duration: e.target.duration,
+          ...currentSong,
         });
       });
     } else {
@@ -40,6 +41,7 @@ function Main({ setLibOpen, currentSong, setCurrentSong, musics }) {
     >
       <Player
         audioRef={audioRef}
+        musics={musics}
         inpRef={inpRef}
         handlePause={handlePause}
         handlePlay={handlePlay}

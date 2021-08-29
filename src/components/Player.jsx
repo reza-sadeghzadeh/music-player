@@ -16,28 +16,27 @@ function player({
   currentSong,
   handlePlay,
   inpRef,
+  musics,
   handlePause,
 }) {
+  console.log(musics);
+
   return (
     <Div>
       <div className="container flex-center">
         <div className="container__cd">
-          <img src="" alt="" />
+          <img src={currentSong.self ? currentSong.self.img : ""} alt="" />
         </div>
         <div className="container__content flex-center">
-          <h1>Music Title</h1>
-          <h2>Dinger Name</h2>
+          <h1>{currentSong.self ? currentSong.self.title : ""}</h1>
+          <h2>{currentSong.self ? currentSong.self.singer : ""}</h2>
         </div>
         <div className="container__controls">
           <input
             ref={inpRef}
             min="0"
-            value={
-              currentSong.time / currentSong.duration
-                ? (currentSong.time / currentSong.duration) * 100
-                : "0"
-            }
-            max="100"
+            value={currentSong.time ? currentSong.time.toFixed(0) : 0}
+            max={currentSong.duration ? currentSong.duration.toFixed(0) : 0}
             type="range"
             name="controls-range"
             id="controls-range"
