@@ -1,22 +1,45 @@
 import React from "react";
 import styled from "styled-components";
 
+import {
+  BiFastForward,
+  BiPlay,
+  BiSkipPrevious,
+  BiSkipNext,
+} from "react-icons/bi";
+import { IoVolumeHighSharp, IoShuffle } from "react-icons/io5";
+
 function Main() {
   return (
     <Div className="flex-center">
       <div className="container flex-center">
-        <div className="container__cd"></div>
+        <div className="container__cd">
+          <img src="" alt="" />
+        </div>
         <div className="container__content flex-center">
           <h1>Music Title</h1>
           <h2>Dinger Name</h2>
         </div>
         <div className="container__controls">
           <input type="range" name="controls-range" id="controls-range" />
-          <div className="container__controls__options">
-            <h1>bunch of icons here</h1>
+          <div className="container__controls__options flex-center">
+            <div className="icons flex-center">
+              <BiSkipPrevious />
+              <BiFastForward id="flip" />
+              <IoVolumeHighSharp className="small" />
+              <BiPlay />
+              <IoShuffle className="small" />
+              <BiFastForward />
+              <BiSkipNext />
+              <input type="range" name="volume-input" id="volume-input" />
+            </div>
           </div>
         </div>
       </div>
+      <audio
+        src="https://irsv.upmusics.com/Downloads/Musics/Sirvan%20Khosravi%20-%20Ghabe%20Akse%20Khali%20(320).mp3?_ga=2.231088543.1808244596.1630225203-536456928.1629913724"
+        autoPlay
+      ></audio>
     </Div>
   );
 }
@@ -29,6 +52,7 @@ const Div = styled.main`
 
   .container {
     width: 100%;
+    height: 100%;
     flex-direction: column;
 
     @media screen and (min-width: 1500px) {
@@ -37,12 +61,19 @@ const Div = styled.main`
 
     //first block
     &__cd {
-      width: clamp(250px, 75%, 350px);
+      /* width: clamp(200px, 95%, 350px); */
+      height: clamp(50px, 80%, 300px);
       aspect-ratio: 1/1;
       background: #fff;
-      border: 1px solid #707070;
       border-radius: 50%;
       position: relative;
+      overflow: hidden;
+
+      img {
+        width: 100%;
+        height: 100%;
+        filter: blur(2px);
+      }
 
       ::after {
         content: "";
@@ -51,10 +82,26 @@ const Div = styled.main`
         width: 13%;
         aspect-ratio: 1/1;
         background: #fff;
-        border: 1px solid #707070;
         border-radius: 50%;
         top: 50%;
         left: 50%;
+      }
+
+      ::before {
+        content: "";
+        transform: translate(-50%, -50%);
+        position: absolute;
+        width: 16%;
+        aspect-ratio: 1/1;
+        border: 1px solid #fffefe;
+        border-radius: 50%;
+        top: 50%;
+        left: 50%;
+        z-index: 3;
+      }
+
+      @media screen and (min-width: 525px) {
+        height: clamp(50px, 80%, 350px);
       }
     }
 
@@ -76,7 +123,39 @@ const Div = styled.main`
 
     //next block
     &__controls {
-      margin: 4rem 0 8rem;
+      margin: 4rem 0;
+      width: clamp(300px, 90%, 700px);
+
+      input {
+        width: 100%;
+      }
+
+      .icons {
+        margin-top: 1.5rem;
+        width: clamp(350px, 75%, 75%);
+        justify-content: space-around;
+        position: relative;
+
+        input {
+          position: absolute;
+          bottom: -25px;
+          width: 150px;
+          left: 25%;
+        }
+
+        svg {
+          font-size: 3.5rem;
+          cursor: pointer;
+          opacity: 0.8;
+        }
+
+        .small {
+          font-size: 2.5rem;
+        }
+        #flip {
+          transform: scale(-1);
+        }
+      }
     }
   }
 `;
