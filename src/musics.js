@@ -3,15 +3,15 @@ const songs = [
     id: 1,
     title: "Baghalam kon",
     singer: "Amin Habibi",
-    img: "https://dl.naslemusic.com/music/1395/03/Amin%20Habibi%20-%20Baghalam%20Kon.mp3",
-    src: "https://naslemusic.com/file/2016/06/%D8%AF%D8%A7%D9%86%D9%84%D9%88%D8%AF-%D8%A2%D9%87%D9%86%DA%AF-%D8%A7%D9%85%DB%8C%D9%86-%D8%AD%D8%A8%DB%8C%D8%A8%DB%8C-%D8%A8%D8%BA%D9%84%D9%85-%DA%A9%D9%86.jpg",
+    src: "https://dl.naslemusic.com/music/1395/03/Amin%20Habibi%20-%20Baghalam%20Kon.mp3",
+    img: "https://www.navahang.com/images/2017/02/470x470/Amin-Habibi.jpg",
   },
   {
     id: 2,
     title: "Khoshbakhtit arezome",
     singer: "Siamak abbasi",
     img: "https://upmusics.com/wp-content/uploads/2017/10/1-1.jpg",
-    src: "https://irsv.upmusics.com/Downloads/Musics/Siamak%20Abbasi%20-%20Khoshbakhtit%20Arezoome%20(320).mp3?_ga=2.175589794.1808244596.1630225203-536456928.1629913724",
+    src: "https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.irantunez.com%2Fmusic%2Famin-habibi-bi-gharar-new-version&psig=AOvVaw24F63zKYV91YtQwOs0h9o0&ust=1630337397614000&source=images&cd=vfe&ved=0CAgQjRxqFwoTCJCl1Z7G1vICFQAAAAAdAAAAABAN",
   },
   {
     id: 3,

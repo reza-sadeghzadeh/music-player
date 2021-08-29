@@ -37,7 +37,7 @@ function Main() {
         </div>
       </div>
       <audio
-        src="https://irsv.upmusics.com/Downloads/Musics/Sirvan%20Khosravi%20-%20Ghabe%20Akse%20Khali%20(320).mp3?_ga=2.231088543.1808244596.1630225203-536456928.1629913724"
+        src="https://dl.naslemusic.com/music/1395/03/Amin%20Habibi%20-%20Baghalam%20Kon.mp3"
         autoPlay
       ></audio>
     </Div>
