@@ -1,11 +1,10 @@
 import "./App.css";
-import { FaSmileWink } from "react-icons/fa";
+import Navbar from "./components/Navbar";
 
 function App() {
   return (
     <>
-      <FaSmileWink />
-      <h1>hello world</h1>
+      <Navbar />
     </>
   );
 }
