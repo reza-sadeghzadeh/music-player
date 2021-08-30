@@ -7,31 +7,34 @@ import {
   BiSkipPrevious,
   BiSkipNext,
 } from "react-icons/bi";
-import { IoVolumeHighSharp, IoShuffle } from "react-icons/io5";
+import { IoVolumeHighSharp, IoShuffleSharp } from "react-icons/io5";
+import { RiRepeatFill, RiRepeatOneLine } from "react-icons/ri";
 
 function player({
   isPlaying,
-  setIsPlaying,
   audioRef,
   currentSong,
   handlePlay,
   handleSkipPrevious,
-  musics,
   handlePause,
+  self,
+  shuffleMode,
+  setShuffleMode,
+  handleSkipPreviousDoblue,
+  handleSkipnext,
 }) {
   return (
     <Div>
       <div className="container flex-center">
         <div className="container__cd">
-          <img src={currentSong.self ? currentSong.self.img : ""} alt="" />
+          <img src={self.img} alt="" />
         </div>
         <div className="container__content flex-center">
-          <h1>{currentSong.self ? currentSong.self.title : ""}</h1>
-          <h2>{currentSong.self ? currentSong.self.singer : ""}</h2>
+          <h1>{self.title}</h1>
+          <h2>{self.singer}</h2>
         </div>
         <div className="container__controls">
           <input
-            id="main-control"
             min="0"
             value={currentSong.time ? currentSong.time.toFixed(0) : 0}
             max={currentSong.duration ? currentSong.duration.toFixed(0) : 0}
@@ -41,7 +44,10 @@ function player({
           />
           <div className="container__controls__options flex-center">
             <div className="icons flex-center">
-              <BiSkipPrevious onClick={handleSkipPrevious} />
+              <BiSkipPrevious
+                onClick={handleSkipPrevious}
+                onDoubleClick={handleSkipPreviousDoblue}
+              />
               <BiFastForward id="flip" />
               <IoVolumeHighSharp className="small" />
               {isPlaying === true ? (
@@ -49,11 +55,27 @@ function player({
               ) : (
                 <BiPlay onClick={() => handlePlay()} />
               )}
-              <IoShuffle className="small" />
+              {shuffleMode === "shuffle" ? (
+                <IoShuffleSharp
+                  className="small"
+                  onClick={() => setShuffleMode("order")}
+                />
+              ) : shuffleMode === "order" ? (
+                <RiRepeatFill
+                  className="small"
+                  onClick={() => setShuffleMode("repeatOne")}
+                />
+              ) : shuffleMode === "repeatOne" ? (
+                <RiRepeatOneLine
+                  className="small"
+                  onClick={() => setShuffleMode("shuffle")}
+                />
+              ) : (
+                ""
+              )}
               <BiFastForward />
-              <BiSkipNext />
+              <BiSkipNext onClick={handleSkipnext} />
               <input
-                id="volume-control"
                 type="range"
                 min="0"
                 step="0.25"
@@ -65,7 +87,7 @@ function player({
           </div>
         </div>
       </div>
-      <audio ref={audioRef} src=""></audio>
+      <audio ref={audioRef}></audio>
     </Div>
   );
 }
@@ -92,6 +114,7 @@ const Div = styled.div`
       overflow: hidden;
 
       img {
+        pointer-events: none;
         width: 100%;
         aspect-ratio: 1/1;
         filter: blur(2px);

@@ -32,7 +32,7 @@ function Library({ libOpen, musics, handleLibClick }) {
             key={m.id}
           >
             <div className="flex-center">
-              <img src={m.img} alt={`${m.singer}'s photo`} />
+              <img src={m.img} alt={`${m.singer}`} />
               <div className="content flex-center">
                 <h3>{m.title}</h3>
                 <h4>{m.singer}</h4>
