@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
+import { gsap } from "gsap";
 import {
   BiFastForward,
   BiPlay,
@@ -10,7 +11,7 @@ import {
 import { IoVolumeHighSharp, IoShuffleSharp } from "react-icons/io5";
 import { RiRepeatFill, RiRepeatOneLine } from "react-icons/ri";
 
-function player({
+function Player({
   isPlaying,
   audioRef,
   currentSong,
@@ -24,6 +25,8 @@ function player({
   handleSkipnext,
   skipForward,
 }) {
+  const img = useRef();
+
   const handleInpChange = async (e) => {
     audioRef.current.currentTime = e.currentTarget.value;
   };
@@ -47,11 +50,25 @@ function player({
     }
   })();
 
+  const [tl, setTl] = useState(gsap.timeline());
+
+  if (isPlaying) {
+    tl.to(img.current, {
+      ease: "linear",
+      rotate: 360,
+      duration: 20,
+      repeat: -1,
+    });
+    tl.play();
+  } else {
+    tl.pause();
+  }
+
   return (
     <Div>
       <div className="container flex-center">
         <div className="container__cd">
-          <img src={self.img} alt="" />
+          <img ref={img} src={self.img} alt="singers photo" />
         </div>
         <div className="container__content flex-center">
           <h1>{self.title}</h1>
@@ -120,7 +137,7 @@ function player({
   );
 }
 
-export default player;
+export default Player;
 
 const Div = styled.div`
   width: 100vw;
