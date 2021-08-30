@@ -15,12 +15,10 @@ function player({
   audioRef,
   currentSong,
   handlePlay,
-  inpRef,
+  handleSkipPrevious,
   musics,
   handlePause,
 }) {
-  console.log(musics);
-
   return (
     <Div>
       <div className="container flex-center">
@@ -33,7 +31,7 @@ function player({
         </div>
         <div className="container__controls">
           <input
-            ref={inpRef}
+            id="main-control"
             min="0"
             value={currentSong.time ? currentSong.time.toFixed(0) : 0}
             max={currentSong.duration ? currentSong.duration.toFixed(0) : 0}
@@ -43,7 +41,7 @@ function player({
           />
           <div className="container__controls__options flex-center">
             <div className="icons flex-center">
-              <BiSkipPrevious />
+              <BiSkipPrevious onClick={handleSkipPrevious} />
               <BiFastForward id="flip" />
               <IoVolumeHighSharp className="small" />
               {isPlaying === true ? (
@@ -55,8 +53,10 @@ function player({
               <BiFastForward />
               <BiSkipNext />
               <input
+                id="volume-control"
                 type="range"
                 min="0"
+                step="0.25"
                 max="180"
                 name="volume-input"
                 id="volume-input"
@@ -93,7 +93,7 @@ const Div = styled.div`
 
       img {
         width: 100%;
-        height: 100%;
+        aspect-ratio: 1/1;
         filter: blur(2px);
       }
 
@@ -134,7 +134,7 @@ const Div = styled.div`
 
       h1 {
         font-weight: 400;
-        margin-bottom: 0.2rem;
+        margin-bottom: 0.3rem;
       }
 
       h2 {
@@ -152,6 +152,94 @@ const Div = styled.div`
         width: 100%;
       }
 
+      input[type="range"] {
+        -webkit-appearance: none;
+        margin: 10px 0;
+        width: 100%;
+      }
+      input[type="range"]:focus {
+        outline: none;
+      }
+      input[type="range"]::-webkit-slider-runnable-track {
+        width: 100%;
+        height: 10px;
+        cursor: pointer;
+        animate: 0.2s;
+        box-shadow: 0px 0px 0px #000000;
+        background: #fce4ff;
+        border-radius: 50px;
+        border: 0px solid #000000;
+      }
+      input[type="range"]::-webkit-slider-thumb {
+        box-shadow: 0px 0px 1px #8d8d8d;
+        border: 1px solid #dbdbdb;
+        height: 19px;
+        width: 19px;
+        border-radius: 50px;
+        background: #ffffff;
+        cursor: pointer;
+        -webkit-appearance: none;
+        margin-top: -5px;
+      }
+      input[type="range"]:focus::-webkit-slider-runnable-track {
+        background: #fce4ff;
+      }
+      input[type="range"]::-moz-range-track {
+        width: 100%;
+        height: 10px;
+        cursor: pointer;
+        animate: 0.2s;
+        box-shadow: 0px 0px 0px #000000;
+        background: #fce4ff;
+        border-radius: 50px;
+        border: 0px solid #000000;
+      }
+      input[type="range"]::-moz-range-thumb {
+        box-shadow: 0px 0px 1px #8d8d8d;
+        border: 1px solid #dbdbdb;
+        height: 19px;
+        width: 19px;
+        border-radius: 50px;
+        background: #ffffff;
+        cursor: pointer;
+      }
+      input[type="range"]::-ms-track {
+        width: 100%;
+        height: 10px;
+        cursor: pointer;
+        animate: 0.2s;
+        background: transparent;
+        border-color: transparent;
+        color: transparent;
+      }
+      input[type="range"]::-ms-fill-lower {
+        background: #fce4ff;
+        border: 0px solid #000000;
+        border-radius: 100px;
+        box-shadow: 0px 0px 0px #000000;
+      }
+      input[type="range"]::-ms-fill-upper {
+        background: #fce4ff;
+        border: 0px solid #000000;
+        border-radius: 100px;
+        box-shadow: 0px 0px 0px #000000;
+      }
+      input[type="range"]::-ms-thumb {
+        box-shadow: 0px 0px 1px #8d8d8d;
+        border: 1px solid #dbdbdb;
+        height: 19px;
+        width: 19px;
+        border-radius: 50px;
+        background: #ffffff;
+        cursor: pointer;
+      }
+      input[type="range"]:focus::-ms-fill-lower {
+        background: #fce4ff;
+      }
+      input[type="range"]:focus::-ms-fill-upper {
+        background: #fce4ff;
+      }
+
       .icons {
         margin-top: 1.5rem;
         width: clamp(350px, 75%, 75%);
@@ -166,16 +254,26 @@ const Div = styled.div`
         }
 
         svg {
-          font-size: 3.5rem;
+          font-size: 3rem;
           cursor: pointer;
           opacity: 0.8;
         }
 
         .small {
-          font-size: 2.5rem;
+          font-size: 2rem;
         }
         #flip {
           transform: scale(-1);
+        }
+
+        @media screen and (min-width: 525px) {
+          svg {
+            font-size: 3.5rem;
+          }
+
+          .small {
+            font-size: 2.5rem;
+          }
         }
       }
     }

@@ -11,8 +11,8 @@ function App() {
   const [currentSong, setCurrentSong] = useState({
     index: 1,
     self: getOneRandomSong(),
-    duration: null,
     currentTime: 0,
+    duration: null,
   });
 
   useEffect(() => {
@@ -26,7 +26,7 @@ function App() {
       index: self.id,
       self: self,
       currentTime: 0,
-      duration: null,
+      ...currentSong,
     });
   };
 

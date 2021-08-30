@@ -29,15 +29,15 @@ const songs = [
   },
   {
     id: 5,
-    title: "Tanha",
+    title: "Bigharar",
     singer: "Amin Habibi",
     img: "https://upmusics.com/wp-content/uploads/2018/11/hjk.jpg",
     src: "https://irsv.upmusics.com/Downloads/Musics/Amin%20Habibi%20%7C%20On%20Ke%20Ye%20Vaghti%20(320).mp3?_ga=2.62326060.1808244596.1630225203-536456928.1629913724",
   },
   {
     id: 6,
-    title: "Sirvan Khosravi",
-    singer: "Amin Habibi",
+    title: "Doostaye Moshtarak",
+    singer: "Hamid Asgari",
     img: "https://nicmusic.net/wp-content/uploads/Hamid-Askari-Divooneh-Var.jpg",
     src: "https://dl.nicmusic.net/nicmusic/023/086/Hamid%20Askari%20-%20Doostaye%20Moshtarak%20320.mp3",
   },
