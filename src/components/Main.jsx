@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Player from "./Player";
 
 function Main({
@@ -16,11 +16,15 @@ function Main({
   handleSkipnext,
   skipForward,
 }) {
+  const [volState, setVolState] = useState(false);
+
   return (
     <main
       className="flex-center"
       style={{ width: "100vw" }}
-      onClick={() => setLibOpen(false)}
+      onClick={() => {
+        setLibOpen(false);
+      }}
     >
       <Player
         self={self}
@@ -35,6 +39,8 @@ function Main({
         handlePlay={handlePlay}
         isPlaying={isPlaying}
         currentSong={currentSong}
+        volState={volState}
+        setVolState={setVolState}
       />
     </main>
   );

@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import { gsap } from "gsap";
+import { motion } from "framer-motion";
 import {
   BiFastForward,
   BiPlay,
@@ -24,6 +25,8 @@ function Player({
   handleSkipPreviousDoblue,
   handleSkipnext,
   skipForward,
+  setVolState,
+  volState,
 }) {
   const img = useRef();
 
@@ -58,11 +61,14 @@ function Player({
       rotate: 360,
       duration: 20,
       repeat: -1,
-    });
+    }).addLabel("img");
     tl.play();
   } else {
     tl.pause();
   }
+  const handleVolInp = (e) => {
+    audioRef.current.volume = e.target.value;
+  };
 
   return (
     <Div>
@@ -77,6 +83,7 @@ function Player({
         <div className="container__controls">
           <input
             min="0"
+            step="0.25"
             onChange={(e) => handleInpChange(e)}
             value={currentSong.time ? currentSong.time.toFixed(0) : 0}
             max={currentSong.duration ? currentSong.duration.toFixed(0) : 100}
@@ -94,7 +101,10 @@ function Player({
                 onClick={() => skipForward("backward")}
                 id="flip"
               />
-              <IoVolumeHighSharp className="small" />
+              <IoVolumeHighSharp
+                onClick={() => setVolState(!volState)}
+                className="small"
+              />
               {isPlaying === true ? (
                 <BiPause onClick={() => handlePause()} />
               ) : (
@@ -120,11 +130,23 @@ function Player({
               )}
               <BiFastForward onClick={() => skipForward("forward")} />
               <BiSkipNext onClick={handleSkipnext} />
-              <input
+              <motion.input
+                initial={{
+                  translateY: 100,
+                  opacity: 0,
+                }}
+                animate={{
+                  translateY: volState ? 10 : 100,
+                  opacity: volState ? 1 : 0,
+                  transition: {
+                    duration: 0.5,
+                  },
+                }}
+                onChange={(e) => handleVolInp(e)}
                 type="range"
                 min="0"
-                step="0.25"
-                max="180"
+                step="0.01"
+                max="1"
                 name="volume-input"
                 id="volume-input"
               />

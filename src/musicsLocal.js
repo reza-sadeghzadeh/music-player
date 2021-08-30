@@ -55,6 +55,27 @@ const songs = [
     img: "/musics/img/yeghane sokot.jpg",
     src: "musics/Mohsen Yeganeh - Sokoot( 320).mp3",
   },
+  {
+    id: 9,
+    title: "Vaysa Donya",
+    singer: "Reza Sadeghi",
+    img: "/musics/img/vaysa-donya-sadeqi.jpg",
+    src: "/musics/Reza Sadeghi - Vaysa Donya (UpMusic).mp3",
+  },
+  {
+    id: 10,
+    title: "Tobeh kardam",
+    singer: "Mostafa fattahi",
+    img: "/musics/img/303-MostafaFatahi-TobeKardam-300x300.jpg",
+    src: "/musics/Mostafa Fatahi - Tobe Kardam (128).mp3",
+  },
+  {
+    id: 11,
+    title: "Tobeh kardam",
+    singer: "Mostafa fattahi",
+    img: "/musics/img/esr.jpg",
+    src: "/musics/Ahmad Saeedi – Vabastat Shodam(320).mp3",
+  },
 ];
 
 export const getAllSongs = () => {
