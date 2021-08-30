@@ -21,6 +21,32 @@ function App() {
     setMusics(getAllSongs());
     let { current: AudioRef } = audioRef;
     AudioRef.addEventListener("timeupdate", (e) => {
+      if (e.target.currentTime === AudioRef.duration) {
+        switch (shuffleMode) {
+          case "shuffle":
+            let newSelf = self;
+            while (newSelf === self) {
+              newSelf = getOneRandomSong();
+            }
+            setSelf(newSelf);
+            handleSongChange(newSelf);
+            break;
+
+          case "order":
+            if (self.id <= musics.length - 1) {
+              setSelf(musics[self.id]);
+              handleSongChange(musics[self.id]);
+            } else {
+              handleSongChange(musics[0]);
+              setSelf(musics[0]);
+            }
+            break;
+
+          default:
+            e.target.currentTime = 0;
+            break;
+        }
+      }
       setCurrentSong({
         time: e.target.currentTime,
         duration: AudioRef.duration,
