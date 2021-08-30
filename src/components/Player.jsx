@@ -22,7 +22,31 @@ function player({
   setShuffleMode,
   handleSkipPreviousDoblue,
   handleSkipnext,
+  skipForward,
 }) {
+  const handleInpChange = async (e) => {
+    audioRef.current.currentTime = e.currentTarget.value;
+  };
+  (async function () {
+    let { current: AudioRef } = audioRef;
+    if (AudioRef && Math.abs(AudioRef.duration - AudioRef.currentTime) < 0.05) {
+      switch (shuffleMode) {
+        case "shuffle":
+          handleSkipnext();
+          break;
+
+        case "order":
+          handleSkipnext();
+          break;
+
+        default:
+          AudioRef.currentTime = 0;
+          await AudioRef.play();
+          break;
+      }
+    }
+  })();
+
   return (
     <Div>
       <div className="container flex-center">
@@ -36,8 +60,9 @@ function player({
         <div className="container__controls">
           <input
             min="0"
+            onChange={(e) => handleInpChange(e)}
             value={currentSong.time ? currentSong.time.toFixed(0) : 0}
-            max={currentSong.duration ? currentSong.duration.toFixed(0) : 0}
+            max={currentSong.duration ? currentSong.duration.toFixed(0) : 100}
             type="range"
             name="controls-range"
             id="controls-range"
@@ -48,7 +73,10 @@ function player({
                 onClick={handleSkipPrevious}
                 onDoubleClick={handleSkipPreviousDoblue}
               />
-              <BiFastForward id="flip" />
+              <BiFastForward
+                onClick={() => skipForward("backward")}
+                id="flip"
+              />
               <IoVolumeHighSharp className="small" />
               {isPlaying === true ? (
                 <BiPause onClick={() => handlePause()} />
@@ -73,7 +101,7 @@ function player({
               ) : (
                 ""
               )}
-              <BiFastForward />
+              <BiFastForward onClick={() => skipForward("forward")} />
               <BiSkipNext onClick={handleSkipnext} />
               <input
                 type="range"

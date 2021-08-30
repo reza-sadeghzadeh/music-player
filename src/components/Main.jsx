@@ -14,6 +14,7 @@ function Main({
   setShuffleMode,
   handleSkipPreviousDoblue,
   handleSkipnext,
+  skipForward,
 }) {
   return (
     <main
@@ -23,6 +24,7 @@ function Main({
     >
       <Player
         self={self}
+        skipForward={skipForward}
         handleSkipnext={handleSkipnext}
         shuffleMode={shuffleMode}
         setShuffleMode={setShuffleMode}

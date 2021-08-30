@@ -5,8 +5,9 @@
 /node_modules
 /.pnp
 .pnp.js
-*.mp3
+ 
 /public/musics
+/.vscode
 
 # testing
 /coverage
