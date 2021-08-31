@@ -4,8 +4,10 @@ import Library from "./components/Library";
 import Main from "./components/Main";
 import { getAllSongs, getOneRandomSong, findOneByTitle } from "./musicsLocal";
 import Navbar from "./components/Navbar";
+import { useAnimation } from "framer-motion";
 
 function App() {
+  const controlVol = useAnimation();
   const audioRef = useRef();
   const [libOpen, setLibOpen] = useState(false);
   const [isPlaying, setIsPlaying] = useState(false);
@@ -17,7 +19,7 @@ function App() {
   });
   const [self, setSelf] = useState(getOneRandomSong());
   const [shuffleMode, setShuffleMode] = useState("shuffle");
-
+  const volInpRef = useRef();
   useEffect(() => {
     setMusics(getAllSongs());
     let { current: AudioRef } = audioRef;
@@ -140,12 +142,14 @@ function App() {
         break;
       case "ArrowUp":
         try {
+          animateVolumeHolder();
           audioRef.current.volume += 0.05;
           if (audioRef.current.volume > 0.95) audioRef.current.volume = 1;
         } catch (ex) {}
         break;
       case "ArrowDown":
         try {
+          animateVolumeHolder();
           audioRef.current.volume -= 0.05;
           if (audioRef.current.volume < 0.05) audioRef.current.volume = 0;
         } catch (ex) {}
@@ -164,6 +168,16 @@ function App() {
     }
   };
 
+  const animateVolumeHolder = () => {
+    controlVol.start({
+      opacity: [0, 1, 1, 0],
+      transition: {
+        duration: 0.5,
+        times: [0.3, 0.45, 0.8, 1],
+      },
+    });
+  };
+
   useEffect(() => {
     window.addEventListener("keydown", handleEvents);
     return () => window.removeEventListener("keydown", handleEvents);
@@ -180,6 +194,7 @@ function App() {
         setLibOpen={setLibOpen}
       />
       <Main
+        controlVol={controlVol}
         self={self}
         volState={volState}
         setVolState={setVolState}

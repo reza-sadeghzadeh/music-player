@@ -9,8 +9,15 @@ import {
   BiSkipPrevious,
   BiSkipNext,
 } from "react-icons/bi";
-import { IoVolumeHighSharp, IoShuffleSharp } from "react-icons/io5";
+import {
+  IoVolumeHighSharp,
+  IoVolumeMediumSharp,
+  IoVolumeMuteSharp,
+  IoVolumeLowSharp,
+  IoShuffleSharp,
+} from "react-icons/io5";
 import { RiRepeatFill, RiRepeatOneLine } from "react-icons/ri";
+import Alert from "./Alert";
 
 function Player({
   isPlaying,
@@ -27,6 +34,7 @@ function Player({
   skipForward,
   setVolState,
   volState,
+  controlVol,
 }) {
   const img = useRef();
 
@@ -72,6 +80,7 @@ function Player({
 
   return (
     <Div>
+      <Alert controlVol={controlVol} audioRef={audioRef} />
       <div className="container flex-center">
         <div className="container__cd">
           <img ref={img} src={self.img} alt="singers photo" />
@@ -81,16 +90,21 @@ function Player({
           <h2>{self.singer}</h2>
         </div>
         <div className="container__controls">
-          <input
-            min="0"
-            step="0.25"
-            onChange={(e) => handleInpChange(e)}
-            value={currentSong.time ? currentSong.time.toFixed(0) : 0}
-            max={currentSong.duration ? currentSong.duration.toFixed(0) : 100}
-            type="range"
-            name="controls-range"
-            id="controls-range"
-          />
+          <div className="container__controls-inp flex-center">
+            <h3>22</h3>
+            <input
+              min="0"
+              step="0.25"
+              onChange={(e) => handleInpChange(e)}
+              value={currentSong.time ? currentSong.time.toFixed(0) : 0}
+              max={currentSong.duration ? currentSong.duration.toFixed(0) : 100}
+              type="range"
+              name="controls-range"
+              id="controls-range"
+            />
+            <h3>22</h3>
+          </div>
+
           <div className="container__controls__options flex-center">
             <div className="icons flex-center">
               <BiSkipPrevious
@@ -101,10 +115,29 @@ function Player({
                 onClick={() => skipForward("backward")}
                 id="flip"
               />
-              <IoVolumeHighSharp
-                onClick={() => setVolState(!volState)}
-                className="small"
-              />
+              {(audioRef.current ? audioRef.current.volume : 1) >= 0.75 ? (
+                <IoVolumeHighSharp
+                  onClick={() => setVolState(!volState)}
+                  className="small"
+                />
+              ) : 0.25 < audioRef.current.volume &&
+                audioRef.current.volume < 0.75 ? (
+                <IoVolumeMediumSharp
+                  onClick={() => setVolState(!volState)}
+                  className="small"
+                />
+              ) : 0 < audioRef.current.volume &&
+                audioRef.current.volume <= 0.25 ? (
+                <IoVolumeLowSharp
+                  onClick={() => setVolState(!volState)}
+                  className="small"
+                />
+              ) : (
+                <IoVolumeMuteSharp
+                  onClick={() => setVolState(!volState)}
+                  className="small"
+                />
+              )}
               {isPlaying === true ? (
                 <BiPause onClick={() => handlePause()} />
               ) : (
@@ -146,7 +179,7 @@ function Player({
                 type="range"
                 min="0"
                 step="0.01"
-                value={audioRef.current ? audioRef.current.volume : 1}
+                value={audioRef.current ? audioRef.current.volume : 0.5}
                 max="1"
                 name="volume-input"
                 id="volume-input"
@@ -236,6 +269,12 @@ const Div = styled.div`
 
     //next block
     &__controls {
+      .container__controls-inp {
+        width: 100%;
+        h3 {
+          margin: 0 0.5rem;
+        }
+      }
       margin: 4rem 0;
       width: clamp(300px, 90%, 700px);
 

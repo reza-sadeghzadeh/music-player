@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import Player from "./Player";
 
 function Main({
@@ -16,6 +16,7 @@ function Main({
   handleSkipnext,
   skipForward,
   volState,
+  controlVol,
   setVolState,
 }) {
   return (
@@ -27,6 +28,7 @@ function Main({
       }}
     >
       <Player
+        controlVol={controlVol}
         self={self}
         volState={volState}
         setVolState={setVolState}
