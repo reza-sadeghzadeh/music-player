@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 import styled from "styled-components";
 import { gsap } from "gsap";
 import { motion } from "framer-motion";
@@ -67,7 +67,7 @@ function Player({
     tl.pause();
   }
   const handleVolInp = (e) => {
-    audioRef.current.volume = e.target.value;
+    audioRef.current.volume = e;
   };
 
   return (
@@ -142,10 +142,11 @@ function Player({
                     duration: 0.5,
                   },
                 }}
-                onChange={(e) => handleVolInp(e)}
+                onInput={(e) => handleVolInp(e.target.value)}
                 type="range"
                 min="0"
                 step="0.01"
+                value={audioRef.current ? audioRef.current.volume : 1}
                 max="1"
                 name="volume-input"
                 id="volume-input"
@@ -328,6 +329,45 @@ const Div = styled.div`
       }
       input[type="range"]:focus::-ms-fill-upper {
         background: #fce4ff;
+      }
+      #volume-input {
+        -webkit-appearance: none;
+        margin-top: 1rem;
+        width: 150px;
+
+        :focus {
+          outline: none;
+        }
+        ::-webkit-slider-runnable-track {
+          width: 100%;
+          height: 8px;
+        }
+        ::-webkit-slider-thumb {
+          height: 14px;
+          margin-top: -3px;
+          width: 14px;
+        }
+        :focus::-webkit-slider-runnable-track {
+          background: #fce4ff;
+        }
+        ::-moz-range-track {
+          width: 100%;
+          height: 8px;
+        }
+        ::-moz-range-thumb {
+          height: 14px;
+          margin-top: -3px;
+          width: 14px;
+        }
+        ::-ms-track {
+          height: 8px;
+        }
+
+        ::-ms-thumb {
+          height: 14px;
+          margin-top: -3px;
+          width: 14px;
+        }
       }
 
       .icons {

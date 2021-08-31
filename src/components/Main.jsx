@@ -15,9 +15,9 @@ function Main({
   handleSkipPreviousDoblue,
   handleSkipnext,
   skipForward,
+  volState,
+  setVolState,
 }) {
-  const [volState, setVolState] = useState(false);
-
   return (
     <main
       className="flex-center"
@@ -28,6 +28,8 @@ function Main({
     >
       <Player
         self={self}
+        volState={volState}
+        setVolState={setVolState}
         skipForward={skipForward}
         handleSkipnext={handleSkipnext}
         shuffleMode={shuffleMode}

@@ -9,6 +9,7 @@ function App() {
   const audioRef = useRef();
   const [libOpen, setLibOpen] = useState(false);
   const [isPlaying, setIsPlaying] = useState(false);
+  const [volState, setVolState] = useState(false);
   const [musics, setMusics] = useState([]);
   const [currentSong, setCurrentSong] = useState({
     time: 0,
@@ -118,6 +119,56 @@ function App() {
     }
   };
 
+  const handleEvents = (e) => {
+    // console.log(e.code);
+    switch (e.code) {
+      case "Space":
+        if (isPlaying) handlePause();
+        else handlePlay();
+        break;
+
+      case "Escape":
+        setLibOpen(!libOpen);
+        break;
+      case "ArrowRight":
+        try {
+          skipForward("forward");
+        } catch (ex) {}
+        break;
+      case "ArrowLeft":
+        skipForward("backward");
+        break;
+      case "ArrowUp":
+        try {
+          audioRef.current.volume += 0.05;
+          if (audioRef.current.volume > 0.95) audioRef.current.volume = 1;
+        } catch (ex) {}
+        break;
+      case "ArrowDown":
+        try {
+          audioRef.current.volume -= 0.05;
+          if (audioRef.current.volume < 0.05) audioRef.current.volume = 0;
+        } catch (ex) {}
+        break;
+      case "KeyV":
+        setVolState(!volState);
+        break;
+      case "KeyM":
+        if (shuffleMode === "shuffle") setShuffleMode("order");
+        else if (shuffleMode === "order") setShuffleMode("repeatOne");
+        else setShuffleMode("shuffle");
+        break;
+
+      default:
+        break;
+    }
+  };
+
+  useEffect(() => {
+    window.addEventListener("keydown", handleEvents);
+    return () => window.removeEventListener("keydown", handleEvents);
+  }, [isPlaying, libOpen, volState, shuffleMode]);
+
   return (
     <>
       <Navbar libOpen={libOpen} setLibOpen={setLibOpen} />
@@ -130,6 +181,8 @@ function App() {
       />
       <Main
         self={self}
+        volState={volState}
+        setVolState={setVolState}
         skipForward={skipForward}
         handleSkipnext={handleSkipnext}
         handleSkipPrevious={handleSkipPrevious}

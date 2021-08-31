@@ -71,8 +71,8 @@ const songs = [
   },
   {
     id: 11,
-    title: "Tobeh kardam",
-    singer: "Mostafa fattahi",
+    title: "Vabastat Shodam",
+    singer: "Ahmad Saeedi",
     img: "/musics/img/esr.jpg",
     src: "/musics/Ahmad Saeedi – Vabastat Shodam(320).mp3",
   },
