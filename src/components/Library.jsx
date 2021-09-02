@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { motion } from "framer-motion";
 
-function Library({ libOpen, musics, handleLibClick }) {
+function Library({ libOpen, musics, handleLibClick, self }) {
   const animationProps = {
     initial: {
       left: -500,
@@ -21,6 +21,7 @@ function Library({ libOpen, musics, handleLibClick }) {
         {musics.map((m) => (
           <motion.li
             onClick={(e) => handleLibClick(e)}
+            className={self === m ? "active" : ""}
             animate={{
               translateX: libOpen ? 0 : -100,
               opacity: libOpen ? 1 : 0,
@@ -74,9 +75,14 @@ const Div = styled(motion.aside)`
 
   li {
     border-top: 1px solid #f5f5f5;
-    transition: 0.3s ease all;
+    transition: 0.15s ease all;
     border-bottom: 1px solid #f5f5f5;
 
+    &.active {
+      background-color: #fad7ff;
+      cursor: grab;
+      border: 1px solid #f9caff;
+    }
     :hover {
       background-color: #fce4ff;
       border-bottom: 1px solid #f07cff;

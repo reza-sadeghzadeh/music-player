@@ -69,8 +69,7 @@ function Player({
       rotate: 360,
       duration: 20,
       repeat: -1,
-    }).addLabel("img");
-    tl.play();
+    }).play();
   } else {
     tl.pause();
   }
@@ -86,9 +85,11 @@ function Player({
       ? Math.floor(audioRef.current.currentTime % 60)
       : 0,
     duration: audioRef.current
-      ? `${Math.floor(audioRef.current.duration / 60)}:${Math.floor(
-          audioRef.current.duration % 60
-        )}`
+      ? `${Math.floor(audioRef.current.duration / 60)}:${
+          Math.floor(audioRef.current.duration % 60) < 10
+            ? `0${Math.floor(audioRef.current.duration % 60)}`
+            : Math.floor(audioRef.current.duration % 60)
+        }`
       : 0,
   };
 
@@ -218,6 +219,8 @@ function Player({
 
 export default Player;
 
+//styles
+
 const Div = styled.div`
   width: 100vw;
   height: calc(100vh - 80px);
@@ -266,7 +269,7 @@ const Div = styled.div`
         border-radius: 50%;
         top: 50%;
         left: 50%;
-        z-index: 3;
+        z-index: 1;
       }
 
       @media screen and (min-width: 525px) {

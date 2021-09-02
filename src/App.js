@@ -188,6 +188,7 @@ function App() {
       <Navbar libOpen={libOpen} setLibOpen={setLibOpen} />
       <Library
         libOpen={libOpen}
+        self={self}
         handleLibClick={handleLibClick}
         musics={musics}
         currentSong={currentSong}
