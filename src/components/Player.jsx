@@ -78,6 +78,20 @@ function Player({
     audioRef.current.volume = e;
   };
 
+  const songPlayInfo = {
+    minute: audioRef.current
+      ? Math.floor(audioRef.current.currentTime / 60)
+      : 0,
+    second: audioRef.current
+      ? Math.floor(audioRef.current.currentTime % 60)
+      : 0,
+    duration: audioRef.current
+      ? `${Math.floor(audioRef.current.duration / 60)}:${Math.floor(
+          audioRef.current.duration % 60
+        )}`
+      : 0,
+  };
+
   return (
     <Div>
       <Alert controlVol={controlVol} audioRef={audioRef} />
@@ -91,7 +105,12 @@ function Player({
         </div>
         <div className="container__controls">
           <div className="container__controls-inp flex-center">
-            <h3>22</h3>
+            <h3>
+              {songPlayInfo.minute}:
+              {songPlayInfo.second < 10
+                ? `0${songPlayInfo.second}`
+                : songPlayInfo.second}
+            </h3>
             <input
               min="0"
               step="0.25"
@@ -102,7 +121,11 @@ function Player({
               name="controls-range"
               id="controls-range"
             />
-            <h3>22</h3>
+            <h3>
+              {songPlayInfo.duration !== "NaN:NaN"
+                ? songPlayInfo.duration
+                : "00:00"}
+            </h3>
           </div>
 
           <div className="container__controls__options flex-center">
@@ -273,6 +296,7 @@ const Div = styled.div`
         width: 100%;
         h3 {
           margin: 0 0.5rem;
+          opacity: 0.7;
         }
       }
       margin: 4rem 0;
@@ -294,7 +318,6 @@ const Div = styled.div`
         width: 100%;
         height: 10px;
         cursor: pointer;
-        animate: 0.2s;
         box-shadow: 0px 0px 0px #000000;
         background: #fce4ff;
         border-radius: 50px;
@@ -318,7 +341,6 @@ const Div = styled.div`
         width: 100%;
         height: 10px;
         cursor: pointer;
-        animate: 0.2s;
         box-shadow: 0px 0px 0px #000000;
         background: #fce4ff;
         border-radius: 50px;
@@ -337,7 +359,6 @@ const Div = styled.div`
         width: 100%;
         height: 10px;
         cursor: pointer;
-        animate: 0.2s;
         background: transparent;
         border-color: transparent;
         color: transparent;
