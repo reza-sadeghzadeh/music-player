@@ -16,7 +16,7 @@ A react application.
 
 # Shortcuts
 - Right arrow key (->) and left arrow key (<-) for skipping 5% forward and backward
-- Up arrow key (->) and down arrow key (<-) for increasing and decreasing 10% of the volume
+- Up arrow key and down arrow key for increasing and decreasing 10% of the volume
 - v key for showing the volume input and controller
 - m key for switching the mode
 - Esc for toggling the library menu
