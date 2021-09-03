@@ -1,7 +1,7 @@
 # Music player app
 
 A react application.
-* See the demo here: (CodeSandbox) https://lxb1v.csb.app/ 
+* See the demo here: (CodeSandbox) https://lxb1v.csb.app/
 * * Demo version due to the limitation of CodeSandbox is a little bit different
 * Find my UI design here: (Adobe XD file) https://1drv.ms/u/s!AtIoK8pbai_RhQilA61tNfaV1ai_?e=A351k5
 
