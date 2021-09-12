@@ -5,7 +5,7 @@ import Main from "./components/Main";
 import { getAllSongs, getOneRandomSong, findOneByTitle } from "./musicsLocal";
 import Navbar from "./components/Navbar";
 import { useAnimation } from "framer-motion";
-import { allContext } from "./conetxts";
+import { allContext } from "./contexts";
 import reducer from "./reducer";
 import { initialState } from "./reducer";
 import * as actions from "./actionTypes";

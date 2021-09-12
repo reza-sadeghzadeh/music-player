@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import styled from "styled-components";
-import { allContext } from "../conetxts";
+import { allContext } from "../contexts";
 
 function Navbar() {
   const { state, actions, dispatch } = useContext(allContext);

@@ -18,7 +18,7 @@ import {
 } from "react-icons/io5";
 import { RiRepeatFill, RiRepeatOneLine } from "react-icons/ri";
 import Alert from "./Alert";
-import { allContext } from "../conetxts";
+import { allContext } from "../contexts";
 
 function Player({
   audioRef,
@@ -54,7 +54,6 @@ function Player({
     audioRef.current &&
     Math.abs(audioRef.current.duration - audioRef.current.currentTime) < 0.05
   ) {
-    // tl.restart();
     let { current: AudioRef } = audioRef;
     (async function () {
       switch (shuffleMode) {
@@ -67,6 +66,7 @@ function Player({
           break;
 
         default:
+          tl.restart();
           AudioRef.currentTime = 0;
           await AudioRef.play();
           break;
@@ -111,7 +111,7 @@ function Player({
       <Alert controlVol={controlVol} audioRef={audioRef} />
       <div className="container flex-center">
         <div className="container__cd">
-          <img ref={img} src={self.img} alt="singers photo" />
+          <img ref={img} src={self.img} alt="song-cover" />
         </div>
         <div className="container__content flex-center">
           <h1>{self.title}</h1>
@@ -155,29 +155,47 @@ function Player({
                 onClick={() => skipForward("backward")}
                 id="flip"
               />
-              {(audioRef.current ? audioRef.current.volume : 1) >= 0.75 ? (
-                <IoVolumeHighSharp
-                  onClick={() => setVolState(!volState)}
-                  className="small"
+              <div
+                onMouseOver={() => setVolState(true)}
+                onMouseLeave={() => setVolState(false)}
+                className="volume"
+              >
+                {(audioRef.current ? audioRef.current.volume : 1) >= 0.75 ? (
+                  <IoVolumeHighSharp className="small" />
+                ) : 0.25 < audioRef.current.volume &&
+                  audioRef.current.volume < 0.75 ? (
+                  <IoVolumeMediumSharp className="small" />
+                ) : 0 < audioRef.current.volume &&
+                  audioRef.current.volume <= 0.25 ? (
+                  <IoVolumeLowSharp className="small" />
+                ) : (
+                  <IoVolumeMuteSharp className="small" />
+                )}
+                <motion.input
+                  onMouseOver={() => setVolState(true)}
+                  onMouseLeave={() => setVolState(false)}
+                  initial={{
+                    translateY: 30,
+                    opacity: 0,
+                  }}
+                  animate={{
+                    translateY: volState ? 15 : 30,
+                    opacity: volState ? 1 : 0,
+                    pointerEvents: volState ? "auto" : "none",
+                    transition: {
+                      duration: 0.3,
+                    },
+                  }}
+                  onInput={(e) => handleVolInp(e.target.value)}
+                  type="range"
+                  min="0"
+                  step="0.01"
+                  value={audioRef.current ? audioRef.current.volume : 0.5}
+                  max="1"
+                  name="volume-input"
+                  id="volume-input"
                 />
-              ) : 0.25 < audioRef.current.volume &&
-                audioRef.current.volume < 0.75 ? (
-                <IoVolumeMediumSharp
-                  onClick={() => setVolState(!volState)}
-                  className="small"
-                />
-              ) : 0 < audioRef.current.volume &&
-                audioRef.current.volume <= 0.25 ? (
-                <IoVolumeLowSharp
-                  onClick={() => setVolState(!volState)}
-                  className="small"
-                />
-              ) : (
-                <IoVolumeMuteSharp
-                  onClick={() => setVolState(!volState)}
-                  className="small"
-                />
-              )}
+              </div>
               {isPlaying === true ? (
                 <BiPause onClick={() => handlePause()} />
               ) : (
@@ -203,27 +221,6 @@ function Player({
               )}
               <BiFastForward onClick={() => skipForward("forward")} />
               <BiSkipNext onClick={handleSkipnext} />
-              <motion.input
-                initial={{
-                  translateY: 100,
-                  opacity: 0,
-                }}
-                animate={{
-                  translateY: volState ? 10 : 100,
-                  opacity: volState ? 1 : 0,
-                  transition: {
-                    duration: 0.5,
-                  },
-                }}
-                onInput={(e) => handleVolInp(e.target.value)}
-                type="range"
-                min="0"
-                step="0.01"
-                value={audioRef.current ? audioRef.current.volume : 0.5}
-                max="1"
-                name="volume-input"
-                id="volume-input"
-              />
             </div>
           </div>
         </div>
@@ -414,6 +411,9 @@ const Div = styled.div`
         -webkit-appearance: none;
         margin-top: 1rem;
         width: 150px;
+        background-color: transparent;
+        padding: 2rem 0;
+        height: 10px;
 
         :focus {
           outline: none;

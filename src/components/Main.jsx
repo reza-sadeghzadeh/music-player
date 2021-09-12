@@ -1,5 +1,6 @@
 import React, { useContext } from "react";
-import { allContext } from "../conetxts";
+import { allContext } from "../contexts";
+
 import Player from "./Player";
 
 function Main({
@@ -45,8 +46,6 @@ function Main({
         handlePause={handlePause}
         handlePlay={handlePlay}
         currentSong={currentSong}
-        volState={volState}
-        setVolState={setVolState}
       />
     </main>
   );

@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import styled from "styled-components";
 import { motion } from "framer-motion";
-import { allContext } from "../conetxts";
+import { allContext } from "../contexts";
 
 function Library({ musics, handleLibClick, self }) {
   const { state } = useContext(allContext);
@@ -36,7 +36,7 @@ function Library({ musics, handleLibClick, self }) {
             key={m.id}
           >
             <div className="flex-center">
-              <img src={m.img} alt={`${m.singer}`} />
+              <img src={m.img} alt={`${m.singer}-song cover`} />
               <div className="content flex-center">
                 <h3>{m.title}</h3>
                 <h4>{m.singer}</h4>
