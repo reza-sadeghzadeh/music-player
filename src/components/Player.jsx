@@ -1,4 +1,4 @@
-import React, { useContext, useRef, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import { gsap } from "gsap";
 import { motion } from "framer-motion";
@@ -38,16 +38,23 @@ function Player({
 }) {
   const { state } = useContext(allContext);
 
+  useEffect(() => {
+    tl.restart();
+  }, [self]);
+
   const img = useRef();
 
   const handleInpChange = async (e) => {
     audioRef.current.currentTime = e.currentTarget.value;
   };
 
+  const [tl, setTl] = useState(gsap.timeline());
+
   if (
     audioRef.current &&
     Math.abs(audioRef.current.duration - audioRef.current.currentTime) < 0.05
   ) {
+    // tl.restart();
     let { current: AudioRef } = audioRef;
     (async function () {
       switch (shuffleMode) {
@@ -66,8 +73,6 @@ function Player({
       }
     })();
   }
-
-  const [tl, setTl] = useState(gsap.timeline());
 
   if (isPlaying) {
     tl.to(img.current, {
@@ -140,11 +145,11 @@ function Player({
           <div className="container__controls__options flex-center">
             <div className="icons flex-center">
               <BiSkipPrevious
+                onDoubleClick={handleSkipPreviousDoblue}
                 onClick={() => {
                   handleSkipPrevious();
                   tl.restart();
                 }}
-                onDoubleClick={handleSkipPreviousDoblue}
               />
               <BiFastForward
                 onClick={() => skipForward("backward")}
@@ -197,12 +202,7 @@ function Player({
                 ""
               )}
               <BiFastForward onClick={() => skipForward("forward")} />
-              <BiSkipNext
-                onClick={() => {
-                  handleSkipnext();
-                  tl.restart();
-                }}
-              />
+              <BiSkipNext onClick={handleSkipnext} />
               <motion.input
                 initial={{
                   translateY: 100,
