@@ -1,9 +1,15 @@
-import React from "react";
+import React, { useContext } from "react";
 import styled from "styled-components";
+import { allContext } from "../conetxts";
 
-function Navbar({ setLibOpen, libOpen }) {
+function Navbar() {
+  const { state, actions, dispatch } = useContext(allContext);
+
   const handleLibOpen = () => {
-    setLibOpen(!libOpen);
+    dispatch({
+      type: actions.setLibopen,
+      payload: { libopen: !state.libopen },
+    });
   };
 
   return (

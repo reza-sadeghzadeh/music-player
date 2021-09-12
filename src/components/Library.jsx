@@ -1,14 +1,17 @@
-import React from "react";
+import React, { useContext } from "react";
 import styled from "styled-components";
 import { motion } from "framer-motion";
+import { allContext } from "../conetxts";
 
-function Library({ libOpen, musics, handleLibClick, self }) {
+function Library({ musics, handleLibClick, self }) {
+  const { state } = useContext(allContext);
+
   const animationProps = {
     initial: {
       left: -500,
     },
     then: {
-      left: libOpen ? 0 : -400,
+      left: state.libopen ? 0 : -400,
       transition: {
         duration: 0.5,
       },
@@ -23,11 +26,11 @@ function Library({ libOpen, musics, handleLibClick, self }) {
             onClick={(e) => handleLibClick(e)}
             className={self === m ? "active" : ""}
             animate={{
-              translateX: libOpen ? 0 : -100,
-              opacity: libOpen ? 1 : 0,
+              translateX: state.libopen ? 0 : -100,
+              opacity: state.libopen ? 1 : 0,
               transition: {
-                duration: libOpen ? 0.2 : 0.5,
-                delay: libOpen ? m.id * 0.1 : 0,
+                duration: state.libopen ? 0.2 : 0.5,
+                delay: state.libopen ? m.id * 0.1 : 0,
               },
             }}
             key={m.id}

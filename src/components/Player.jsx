@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useContext, useRef, useState } from "react";
 import styled from "styled-components";
 import { gsap } from "gsap";
 import { motion } from "framer-motion";
@@ -18,15 +18,15 @@ import {
 } from "react-icons/io5";
 import { RiRepeatFill, RiRepeatOneLine } from "react-icons/ri";
 import Alert from "./Alert";
+import { allContext } from "../conetxts";
 
 function Player({
-  isPlaying,
   audioRef,
-  currentSong,
   handlePlay,
   handleSkipPrevious,
   handlePause,
   self,
+  isPlaying,
   shuffleMode,
   setShuffleMode,
   handleSkipPreviousDoblue,
@@ -36,6 +36,8 @@ function Player({
   volState,
   controlVol,
 }) {
+  const { state } = useContext(allContext);
+
   const img = useRef();
 
   const handleInpChange = async (e) => {
@@ -73,6 +75,7 @@ function Player({
   } else {
     tl.pause();
   }
+
   const handleVolInp = (e) => {
     audioRef.current.volume = e;
   };
@@ -116,8 +119,8 @@ function Player({
               min="0"
               step="0.25"
               onChange={(e) => handleInpChange(e)}
-              value={currentSong.time ? currentSong.time.toFixed(0) : 0}
-              max={currentSong.duration ? currentSong.duration.toFixed(0) : 100}
+              value={state.currentTime ? state.currentTime : 0}
+              max={state.duration ? state.duration : 100}
               type="range"
               name="controls-range"
               id="controls-range"
@@ -220,7 +223,6 @@ function Player({
 export default Player;
 
 //styles
-
 const Div = styled.div`
   width: 100vw;
   height: calc(100vh - 80px);
@@ -300,6 +302,7 @@ const Div = styled.div`
         h3 {
           margin: 0 0.5rem;
           opacity: 0.7;
+          width: 45px;
         }
       }
       margin: 4rem 0;
@@ -393,6 +396,7 @@ const Div = styled.div`
       input[type="range"]:focus::-ms-fill-upper {
         background: #fce4ff;
       }
+
       #volume-input {
         -webkit-appearance: none;
         margin-top: 1rem;

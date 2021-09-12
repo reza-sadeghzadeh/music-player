@@ -1,8 +1,8 @@
-import React from "react";
+import React, { useContext } from "react";
+import { allContext } from "../conetxts";
 import Player from "./Player";
 
 function Main({
-  setLibOpen,
   currentSong,
   audioRef,
   isPlaying,
@@ -19,18 +19,21 @@ function Main({
   controlVol,
   setVolState,
 }) {
+  const { dispatch, actions } = useContext(allContext);
+
   return (
     <main
       className="flex-center"
       style={{ width: "100vw" }}
       onClick={() => {
-        setLibOpen(false);
+        dispatch({ type: actions.setLibopen, payload: { libopen: false } });
       }}
     >
       <Player
         controlVol={controlVol}
         self={self}
         volState={volState}
+        isPlaying={isPlaying}
         setVolState={setVolState}
         skipForward={skipForward}
         handleSkipnext={handleSkipnext}
@@ -41,7 +44,6 @@ function Main({
         handleSkipPreviousDoblue={handleSkipPreviousDoblue}
         handlePause={handlePause}
         handlePlay={handlePlay}
-        isPlaying={isPlaying}
         currentSong={currentSong}
         volState={volState}
         setVolState={setVolState}

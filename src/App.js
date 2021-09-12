@@ -1,33 +1,49 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useReducer } from "react";
 import "./App.css";
 import Library from "./components/Library";
 import Main from "./components/Main";
 import { getAllSongs, getOneRandomSong, findOneByTitle } from "./musicsLocal";
 import Navbar from "./components/Navbar";
 import { useAnimation } from "framer-motion";
+import { allContext } from "./conetxts";
+import reducer from "./reducer";
+import { initialState } from "./reducer";
+import * as actions from "./actionTypes";
 
 function App() {
+  const [state, dispatch] = useReducer(reducer, initialState);
   const controlVol = useAnimation();
   const audioRef = useRef();
-  const [libOpen, setLibOpen] = useState(false);
+
   const [isPlaying, setIsPlaying] = useState(false);
   const [volState, setVolState] = useState(false);
   const [musics, setMusics] = useState([]);
-  const [currentSong, setCurrentSong] = useState({
-    time: 0,
-    duration: null,
-  });
+
   const [self, setSelf] = useState(getOneRandomSong());
   const [shuffleMode, setShuffleMode] = useState("shuffle");
-  const volInpRef = useRef();
+
   useEffect(() => {
     setMusics(getAllSongs());
     let { current: AudioRef } = audioRef;
+    dispatch({
+      type: actions.setDuration,
+      payload: { duration: AudioRef.duration },
+    });
+    let once = 1;
     AudioRef.addEventListener("timeupdate", async (e) => {
-      setCurrentSong({
-        time: e.target.currentTime,
-        duration: AudioRef.duration,
+      dispatch({
+        type: actions.timeUpdate,
+        payload: {
+          currentTime: e.target.currentTime.toFixed(1),
+        },
       });
+      if (once) {
+        dispatch({
+          type: actions.setDuration,
+          payload: { duration: e.target.duration },
+        });
+        once--;
+      }
     });
   }, []);
 
@@ -39,10 +55,8 @@ function App() {
 
   const handleSongChange = async (self) => {
     let { current: AudioRef } = audioRef;
-    setCurrentSong({
-      ...currentSong,
-      time: 0,
-    });
+
+    dispatch({ type: "TIME_UPDATE", payload: { currentTime: 0 } });
     AudioRef.src = self.src;
 
     if (isPlaying) {
@@ -56,7 +70,7 @@ function App() {
   const handlePlay = async () => {
     let { current: AudioRef } = audioRef;
 
-    if (currentSong.time === 0) {
+    if (state.currentTime === 0) {
       setIsPlaying(true);
       handleSongChange(self);
     } else {
@@ -122,7 +136,6 @@ function App() {
   };
 
   const handleEvents = (e) => {
-    // console.log(e.code);
     switch (e.code) {
       case "Space":
         if (isPlaying) handlePause();
@@ -130,8 +143,12 @@ function App() {
         break;
 
       case "Escape":
-        setLibOpen(!libOpen);
+        dispatch({
+          type: "SET_LIB_OPEN",
+          payload: { libopen: !state.libopen },
+        });
         break;
+
       case "ArrowRight":
         try {
           skipForward("forward");
@@ -181,38 +198,30 @@ function App() {
   useEffect(() => {
     window.addEventListener("keydown", handleEvents);
     return () => window.removeEventListener("keydown", handleEvents);
-  }, [isPlaying, libOpen, volState, shuffleMode]);
+  }, [state]);
+  // }, [isPlaying, libOpen, volState, shuffleMode]);
 
   return (
-    <>
-      <Navbar libOpen={libOpen} setLibOpen={setLibOpen} />
-      <Library
-        libOpen={libOpen}
-        self={self}
-        handleLibClick={handleLibClick}
-        musics={musics}
-        currentSong={currentSong}
-        setLibOpen={setLibOpen}
-      />
+    <allContext.Provider value={{ state, dispatch, actions }}>
+      <Navbar />
+      <Library self={self} handleLibClick={handleLibClick} musics={musics} />
       <Main
         controlVol={controlVol}
         self={self}
         volState={volState}
         setVolState={setVolState}
+        isPlaying={isPlaying}
         skipForward={skipForward}
         handleSkipnext={handleSkipnext}
         handleSkipPrevious={handleSkipPrevious}
         handleSkipPreviousDoblue={handleSkipPreviousDoblue}
         handlePause={handlePause}
         handlePlay={handlePlay}
-        isPlaying={isPlaying}
         audioRef={audioRef}
         shuffleMode={shuffleMode}
         setShuffleMode={setShuffleMode}
-        currentSong={currentSong}
-        setLibOpen={setLibOpen}
       />
-    </>
+    </allContext.Provider>
   );
 }
 
