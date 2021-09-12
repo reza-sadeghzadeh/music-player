@@ -29,7 +29,7 @@ function App() {
       type: actions.setDuration,
       payload: { duration: AudioRef.duration },
     });
-    let once = 1;
+
     AudioRef.addEventListener("timeupdate", async (e) => {
       dispatch({
         type: actions.timeUpdate,
@@ -37,13 +37,10 @@ function App() {
           currentTime: e.target.currentTime.toFixed(1),
         },
       });
-      if (once) {
-        dispatch({
-          type: actions.setDuration,
-          payload: { duration: e.target.duration },
-        });
-        once--;
-      }
+      dispatch({
+        type: actions.setDuration,
+        payload: { duration: e.target.duration },
+      });
     });
   }, []);
 

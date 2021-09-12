@@ -43,9 +43,13 @@ function Player({
   const handleInpChange = async (e) => {
     audioRef.current.currentTime = e.currentTarget.value;
   };
-  (async function () {
+
+  if (
+    audioRef.current &&
+    Math.abs(audioRef.current.duration - audioRef.current.currentTime) < 0.05
+  ) {
     let { current: AudioRef } = audioRef;
-    if (AudioRef && Math.abs(AudioRef.duration - AudioRef.currentTime) < 0.05) {
+    (async function () {
       switch (shuffleMode) {
         case "shuffle":
           handleSkipnext();
@@ -60,8 +64,8 @@ function Player({
           await AudioRef.play();
           break;
       }
-    }
-  })();
+    })();
+  }
 
   const [tl, setTl] = useState(gsap.timeline());
 
@@ -69,6 +73,7 @@ function Player({
     tl.to(img.current, {
       ease: "linear",
       rotate: 360,
+      lazy: true,
       duration: 20,
       repeat: -1,
     }).play();
@@ -120,7 +125,7 @@ function Player({
               step="0.25"
               onChange={(e) => handleInpChange(e)}
               value={state.currentTime ? state.currentTime : 0}
-              max={state.duration ? state.duration : 100}
+              max={state.duration ? state.duration : 0}
               type="range"
               name="controls-range"
               id="controls-range"
@@ -135,7 +140,10 @@ function Player({
           <div className="container__controls__options flex-center">
             <div className="icons flex-center">
               <BiSkipPrevious
-                onClick={handleSkipPrevious}
+                onClick={() => {
+                  handleSkipPrevious();
+                  tl.restart();
+                }}
                 onDoubleClick={handleSkipPreviousDoblue}
               />
               <BiFastForward
@@ -189,7 +197,12 @@ function Player({
                 ""
               )}
               <BiFastForward onClick={() => skipForward("forward")} />
-              <BiSkipNext onClick={handleSkipnext} />
+              <BiSkipNext
+                onClick={() => {
+                  handleSkipnext();
+                  tl.restart();
+                }}
+              />
               <motion.input
                 initial={{
                   translateY: 100,
